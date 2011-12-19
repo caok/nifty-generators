@@ -5,14 +5,16 @@
     = t('.title')
   .links
     %ol
-      <%- if action? :edit -%>
-      %li= link_to t('link.edit'), <%= item_path :action => :edit, :instance_variable => true %> if can? :update, @<%= instance_name %> if can? :update, @<%= instance_name %>
-      <%- end -%>
-      <%- if action? :destroy -%>
-      %li= link_to t('link.destroy'), <%= item_path :instance_variable => true %>, :confirm => t('views.are_you_sure'), :method => :delete if can? :destroy, @<%= instance_name %>
-      <%- end -%>
       <%- if action? :index -%>
       %li= link_to t('link.index'), <%= items_path %>
+      <%- end -%>
+      <%- if action? :edit -%>
+      - if can? :update, @<%= instance_name %>
+        %li= link_to t('link.edit'), <%= item_path :action => :edit, :instance_variable => true %>
+      <%- end -%>
+      <%- if action? :destroy -%>
+      - if can? :destroy, @<%= instance_name %>
+        %li= link_to t('link.destroy'), <%= item_path :instance_variable => true %>, :confirm => t('views.are_you_sure'), :method => :delete
       <%- end -%>
 
 = semantic_attributes_for @<%= instance_name %> do |attr|

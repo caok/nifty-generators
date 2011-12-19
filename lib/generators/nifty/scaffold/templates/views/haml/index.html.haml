@@ -10,7 +10,7 @@
         %li= link_to t('link.new'), <%= item_path :action => :new %>
       <%- end -%>
 
-= paginate collection
+= paginate <%= instances_name %>
 
 .autoscroll
   %table.list
@@ -23,17 +23,19 @@
     %tbody
       - @<%= instances_name %>.each do |<%= instance_name %>|
         %tr{:class => cycle("odd", "even")}
-          %td= link_to "##{<%= instance_name %>}.id"
+          %td= link_to "##{<%= instance_name %>}.id", <%= instance_name %>
           <%- for attribute in model_attributes -%>
           %td= <%= instance_name %>.<%= attribute.name %>
           <%- end -%>
           %td.buttons
             <%- if action? :edit -%>
-            = link_to t('link.show'), <%= item_path :action => :edit, :instance_variable => true %>, :class => 'icon icon-edit' if can? :update, <%= instance_name %>
+            - if can? :update, <%= instance_name %>
+              = link_to t('link.edit'), <%= item_path :action => :edit %>, :class => 'icon icon-edit'
             <%- end -%>
             <%- if action? :destroy -%>
-            = link_to t('link.destroy'), <%= item_path :instance_variable => true %>, :confirm => t('views.are_you_sure'), :method => :delete, :class => 'icon icon-del' if can? :destroy, <%= instance_name %>
+            - if can? :destroy, <%= instance_name %>
+              = link_to t('link.destroy'), <%= item_path %>, :confirm => t('views.are_you_sure'), :method => :delete, :class => 'icon icon-del'
             <%- end -%>
 
-= paginate collection
+= paginate <%= instances_name %>
 
