@@ -1,7 +1,12 @@
-- title "New <%= singular_name.titleize %>"
+- title t('.title')
+
+.topbar
+  %h2
+    = t('.title')
+  .links
+    %ol
+      <%- if action? :index -%>
+      %li= link_to t('link.index'), <%= items_path %>
+      <%- end -%>
 
 <%= render_form %>
-
-<%- if action? :index -%>
-%p= link_to "Back to List", <%= items_path %>
-<%- end -%>

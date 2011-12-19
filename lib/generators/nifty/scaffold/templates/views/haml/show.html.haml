@@ -1,20 +1,23 @@
-- title "<%= singular_name.titleize %>"
+- title t('.title')
 
-<%- for attribute in model_attributes -%>
-%p
-  %strong <%= attribute.human_name.titleize %>:
-  = @<%= instance_name %>.<%= attribute.name %>
-<%- end -%>
+.topbar
+  %h2
+    = t('.title')
+  .links
+    %ol
+      <%- if action? :edit -%>
+      %li= link_to t('link.edit'), <%= item_path :action => :edit, :instance_variable => true %> if can? :update, @<%= instance_name %> if can? :update, @<%= instance_name %>
+      <%- end -%>
+      <%- if action? :destroy -%>
+      %li= link_to t('link.destroy'), <%= item_path :instance_variable => true %>, :confirm => t('views.are_you_sure'), :method => :delete if can? :destroy, @<%= instance_name %>
+      <%- end -%>
+      <%- if action? :index -%>
+      %li= link_to t('link.index'), <%= items_path %>
+      <%- end -%>
 
-%p
-  <%- if action? :edit -%>
-  = link_to "Edit", <%= item_path :action => :edit, :instance_variable => true %>
-  |
-  <%- end -%>
-  <%- if action? :destroy -%>
-  = link_to "Destroy", <%= item_path :instance_variable => true %>, :confirm => 'Are you sure?', :method => :delete
-  |
-  <%- end -%>
-  <%- if action? :index -%>
-  = link_to "View All", <%= items_path %>
-  <%- end -%>
+= semantic_attributes_for @<%= instance_name %> do |attr|
+  = attr.attributes do
+    <%- for attribute in model_attributes -%>
+    = attr.attribute :<%= attribute.name %>
+    <%- end -%>
+

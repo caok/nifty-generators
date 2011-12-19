@@ -90,6 +90,7 @@ module Nifty
 
       def create_controller
         unless options.skip_controller?
+          template 'authorized_controller.rb', "app/controllers/authorized_controller.rb"
           template 'controller.rb', "app/controllers/#{plural_name}_controller.rb"
 
           template 'helper.rb', "app/helpers/#{plural_name}_helper.rb"

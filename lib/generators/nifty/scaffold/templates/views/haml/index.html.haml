@@ -1,25 +1,39 @@
-- title "<%= plural_name.titleize %>"
+- title t('.title')
 
-%table
-  %tr
-    <%- for attribute in model_attributes -%>
-    %th <%= attribute.human_name %>
-    <%- end -%>
-  - for <%= instance_name %> in @<%= instances_name %>
-    %tr
-      <%- for attribute in model_attributes -%>
-      %td= <%= instance_name %>.<%= attribute.name %>
-      <%- end -%>
-      <%- if action? :show -%>
-      %td= link_to 'Show', <%= item_path %>
-      <%- end -%>
-      <%- if action? :edit -%>
-      %td= link_to 'Edit', <%= item_path :action => :edit %>
-      <%- end -%>
-      <%- if action? :destroy -%>
-      %td= link_to 'Destroy', <%= item_path %>, :confirm => 'Are you sure?', :method => :delete
+.topbar
+  %h2
+    = t('.title')
+  .links
+    %ol
+      <%- if actions? :new -%>
+      - if can? :create, <%= class_name %>
+        %li= link_to t('link.new'), <%= item_path :action => :new %>
       <%- end -%>
 
-<%- if actions? :new -%>
-%p= link_to "New <%= singular_name.titleize %>", <%= item_path :action => :new %>
-<%- end -%>
+= paginate collection
+
+.autoscroll
+  %table.list
+    %thead
+      %tr
+        %th id
+        <%- for attribute in model_attributes -%>
+        %th= sort_link @q, :<%= attribute.name %>
+        <%- end -%>
+    %tbody
+      - @<%= instances_name %>.each do |<%= instance_name %>|
+        %tr{:class => cycle("odd", "even")}
+          %td= link_to "##{<%= instance_name %>}.id"
+          <%- for attribute in model_attributes -%>
+          %td= <%= instance_name %>.<%= attribute.name %>
+          <%- end -%>
+          %td.buttons
+            <%- if action? :edit -%>
+            = link_to t('link.show'), <%= item_path :action => :edit, :instance_variable => true %>, :class => 'icon icon-edit' if can? :update, <%= instance_name %>
+            <%- end -%>
+            <%- if action? :destroy -%>
+            = link_to t('link.destroy'), <%= item_path :instance_variable => true %>, :confirm => t('views.are_you_sure'), :method => :delete, :class => 'icon icon-del' if can? :destroy, <%= instance_name %>
+            <%- end -%>
+
+= paginate collection
+
