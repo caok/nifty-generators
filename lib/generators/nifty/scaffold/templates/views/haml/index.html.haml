@@ -16,7 +16,7 @@
   %table.list
     %thead
       %tr
-        %th id
+        %th #
         <%- for attribute in model_attributes -%>
         %th= sort_link @q, :<%= attribute.name %>
         <%- end -%>
