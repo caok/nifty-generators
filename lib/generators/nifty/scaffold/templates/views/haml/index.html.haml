@@ -10,6 +10,14 @@
         %li= link_to t('link.new'), <%= item_path :action => :new %>
       <%- end -%>
 
+.search
+  = search_form_for @q do |f|
+    <%- for attribute in model_attributes -%>
+    = f.label :<%= attribute.name %>_cont
+    = f.text_field :<%= attribute.name %>_cont, :size => 15
+    <%- end -%>
+    = f.submit
+
 = paginate @<%= instances_name %>
 
 .autoscroll
