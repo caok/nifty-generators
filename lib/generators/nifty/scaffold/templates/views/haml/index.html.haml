@@ -10,7 +10,7 @@
         %li= link_to t('link.new'), <%= item_path :action => :new %>
       <%- end -%>
 
-= paginate <%= instances_name %>
+= paginate @<%= instances_name %>
 
 .autoscroll
   %table.list
@@ -20,10 +20,11 @@
         <%- for attribute in model_attributes -%>
         %th= sort_link @q, :<%= attribute.name %>
         <%- end -%>
+        %th= t('views.operation')
     %tbody
       - @<%= instances_name %>.each do |<%= instance_name %>|
         %tr{:class => cycle("odd", "even")}
-          %td= link_to "##{<%= instance_name %>}.id", <%= instance_name %>
+          %td= link_to "##{<%= instance_name %>.id}", <%= instance_name %>
           <%- for attribute in model_attributes -%>
           %td= <%= instance_name %>.<%= attribute.name %>
           <%- end -%>
@@ -37,5 +38,5 @@
               = link_to t('link.destroy'), <%= item_path %>, :confirm => t('views.are_you_sure'), :method => :delete, :class => 'icon icon-del'
             <%- end -%>
 
-= paginate <%= instances_name %>
+= paginate @<%= instances_name %>
 
