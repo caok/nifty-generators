@@ -92,7 +92,7 @@ module Nifty
         unless options.skip_controller?
           template 'authorized_controller.rb', "app/controllers/authorized_controller.rb"
 
-          template 'application_helper.rb', "app/controllers/application_helper.rb"
+          template 'application_helper.rb', "app/helpers/application_helper.rb"
 
           template 'controller.rb', "app/controllers/#{plural_name}_controller.rb"
 
