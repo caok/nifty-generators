@@ -1,5 +1,5 @@
 class <%= plural_class_name %>Controller < AuthorizedController
-  inherited_resources
+  inherit_resources
 
   protected
     def collection
