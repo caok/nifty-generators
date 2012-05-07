@@ -22,4 +22,6 @@
     <%- for attribute in model_attributes -%>
     = attr.attribute :<%= attribute.name %>
     <%- end -%>
+    = attr.attribute :created_at
+    = attr.attribute :updated_at
 
