@@ -4,5 +4,4 @@
   <%- for attribute in model_attributes -%>
     = f.input :<%= attribute.name %>
   <%- end -%>
-  = f.buttons do
-    = f.commit_button
+  = f.actions
